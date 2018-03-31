@@ -1,0 +1,29 @@
+Name SpaceX launches 10 Iridium satellites from California
+URL https://abcnews.go.com/Technology/wireStory/spacex-launches-10-iridium-satellites-california-54123618
+Priority High
+
+A SpaceX Falcon 9 rocket successfully launched 10 next-generation satellites Friday for Iridium Communications from California.
+
+The rocket, including a previously used first stage, lifted off from Vandenberg Air Force at 7:13 a.m. PDT and arced southward over the Pacific Ocean west of Los Angeles.
+
+About an hour later, the rocket's second stage released the satellites into low Earth orbit, circling from pole to pole.
+
+"All 10 new satellites have successfully communicated with the Iridium Satellite Network Operations Center and are preparing to begin testing," the McLean, Virginia, company said in a statement.
+
+The payload was the fifth set of 10 new orbiters launched for the company, which is replacing its entire space-based mobile voice and data network with a satellite constellation dubbed Iridium NEXT.
+
+The $3 billion project is scheduled for completion this year, with a total of 75 new satellites in orbit. Nine will be on-orbit spares and an additional six will remain on the ground until needed. Iridium said it now has a million active subscribers.
+
+The satellites also carry equipment for Aireon LLC's air traffic surveillance system designed to provide airlines with frequent updates of aircraft positions, speeds and altitudes, even over remote oceanic and polar areas.
+
+The Falcon 9's first stage previously flew on an October 2017 Iridium mission and safely landed on a so-called drone ship at sea.
+
+This time there was no attempt to recover the first stage but it was to perform a simulated landing over the ocean, said Michael Hammersley, a SpaceX materials engineer serving as launch spokesman.
+
+Historically, expended rocket segments have been allowed to fall into oceans, but SpaceX founder Elon Musk has made reusability a key goal in order to drive down launch costs.
+
+SpaceX is also experimenting with recovering fairings, the aerodynamic covering that protects satellites during the first few minutes of a launch and then is shed in two halves that fall back to Earth.
+
+SpaceX has a high-speed ship with an enormous net structure designed to catch half of a fairing as it descends under a parafoil.
+
+Musk tweeted that a problem caused the parafoil to twist during Friday's attempt and the fairing impacted the water at high speed. He said helicopter drop tests would be conducted to solve the problem.
