@@ -22,8 +22,8 @@ public class Website implements Comparable<Website>
      */
     public Website(String name, String url, String priority)
     {
-        this.name = this.name;
-        this.url = this.url;
+        this.name = name;
+        this.url = url;
         this.priority = priority;
         this.wordList = new ArrayList<String>();
         this.excludedList = new ArrayList<String>();
@@ -40,15 +40,23 @@ public class Website implements Comparable<Website>
     /**
      * Method add words to site's list of words
      */
-    public void addWord(ArrayList<String> toAdd){   
-        for(String word: toAdd){           
+    public void addWords(ArrayList<String> toAdd){   
+        for(String word: toAdd){  
+            if(!this.wordList.contains(word)){
+                this.wordList.add(word);
+            }
+        }
+    }
+
+    public void addWord(String word){
+        if(!this.wordList.contains(word)){
             this.wordList.add(word);
         }
     }
 
     public int compareTo(Website site){
-        if(site.getPriority().equals(this.priority)){
-            return 0;
+        if(this.getPriority().equals(site.getPriority())){
+            return this.getName().compareTo(site.getName());
         }
         else if(this.priority.equals("Low")){
             return -1;
@@ -62,6 +70,18 @@ public class Website implements Comparable<Website>
             }
         }
         return 1;
-
     }
+
+    public void print(){
+        System.out.println("Name " + this.name);
+        System.out.println("URL " + this.url);
+        System.out.println("Priority " + this.url);
+        for(int i = 0; i<wordList.size(); i++){
+            if(i%10 == 0){
+                System.out.println();
+            }
+            System.out.print(wordList.get(i) + " ");
+        }
+    }
+
 }
