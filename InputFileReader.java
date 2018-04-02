@@ -3,9 +3,10 @@ import java.io.*;
 
 public class InputFileReader{
     private ArrayList<String> fileNames;
-    private PriorityQueue<Website> siteList;
-    private Scanner scanner;
     protected ArrayList<String> excludedWord;
+    protected TreeSet<Website> siteList;
+    private Scanner scanner;
+
 
     public static void main(String[] args){
         ExcludedListReader excludeRead = new ExcludedListReader("excludedList.txt");
@@ -21,7 +22,7 @@ public class InputFileReader{
             FileReader reader = new FileReader(dir);
             scanner = new Scanner(reader);
             this.excludedWord = list.excludedList();
-            this.siteList = new PriorityQueue<Website>();
+            this.siteList = new TreeSet<Website>();
         }
         catch(Exception e){
             e.printStackTrace(System.out);

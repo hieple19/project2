@@ -54,22 +54,38 @@ public class Website implements Comparable<Website>
         }
     }
 
+    public boolean searchWord(String word){
+        if(this.wordList.contains(word)){
+            return true;
+        }
+        return false;
+    }
+    
+     public boolean searchWords(ArrayList<String> toSearch){
+        for(String word: toSearch){
+            if(!this.wordList.contains(word)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int compareTo(Website site){
-        if(this.getPriority().equals(site.getPriority())){
+        if(this.getPriority().toLowerCase().equals(site.getPriority().toLowerCase())){
             return this.getName().compareTo(site.getName());
         }
-        else if(this.priority.equals("Low")){
-            return -1;
+        else if(this.priority.toLowerCase().equals("low")){
+            return 1;
         }
-        else if(this.priority.equals("Medium")){
-            if(site.getPriority().equals("High")){
-                return -1;
-            }
-            else if(site.getPriority().equals("Low")){
+        else if(this.priority.toLowerCase().equals("medium")){
+            if(site.getPriority().toLowerCase().equals("high")){
                 return 1;
             }
+            else if(site.getPriority().toLowerCase().equals("low")){
+                return -1;
+            }
         }
-        return 1;
+        return -1;
     }
 
     public void print(){
@@ -82,6 +98,15 @@ public class Website implements Comparable<Website>
             }
             System.out.print(wordList.get(i) + " ");
         }
+    }
+
+    public String toString(){
+        return this.name + " " + this.url + " " + this.priority;
+    }
+
+    public void printResult(){
+        System.out.println("Name " + this.name);
+        System.out.println("URL " + this.url);
     }
 
 }
