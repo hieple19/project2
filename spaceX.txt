@@ -1,7 +1,3 @@
-Name SpaceX launches 10 Iridium satellites from California
-URL https://abcnews.go.com/Technology/wireStory/spacex-launches-10-iridium-satellites-california-54123618
-Priority High
-
 A SpaceX Falcon 9 rocket successfully launched 10 next-generation satellites Friday for Iridium Communications from California.
 
 The rocket, including a previously used first stage, lifted off from Vandenberg Air Force at 7:13 a.m. PDT and arced southward over the Pacific Ocean west of Los Angeles.

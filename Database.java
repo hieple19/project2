@@ -35,35 +35,30 @@ public class Database
     }
 
     public void addSite(Website site){
-        siteList.add(site);
+        this.siteList.add(site);
     }
 
-    /*public ArrayList<Website> search(ArrayList<String> words){
-    ArrayList<Website> sites = new ArrayList<Website>();
-    for(String word: words){
-    for(Website site: siteList){
-    if(site.searchWord(word)){
-    sites.add(site);
+    public void readData(InputFileReader i1){
+        for(Website w: i1.siteList()){
+            this.siteList.add(w);
+        }
     }
-    }
-    }
-    return sites;
-    }*/
 
-    public ArrayList<Website> search(ArrayList<String> words){
-        ArrayList<Website> sites = new ArrayList<Website>();
-
+    public PriorityQueue<Website> searchWords(PriorityQueue<String> searchWords){
+        PriorityQueue<Website>  sites = new PriorityQueue<Website> ();
         for(Website site: siteList){
-            if(site.searchWords(words)){
+            if(site.searchWords(searchWords)){
                 sites.add(site);
             }
         }
-
         return sites;
     }
 
     public void print(){
         System.out.println(siteList);
+        for(Website w: siteList){
+            w.printResult();
+        }
     }
 
 }
