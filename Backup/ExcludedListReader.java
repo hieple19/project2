@@ -15,7 +15,7 @@ public class ExcludedListReader
         
     }
     protected ArrayList<String> excludedWord;
-    private Scanner scanner;
+    private Scanner excludedScanner;
 
     /**
      * Constructor for objects of class InputFile
@@ -25,7 +25,7 @@ public class ExcludedListReader
     public ExcludedListReader(String dir){
         try{
             FileReader fileReader = new FileReader(dir);
-            scanner = new Scanner(fileReader);
+            excludedScanner = new Scanner(fileReader);
         }
         catch(Exception e){
             System.out.println("Cannot read file");
@@ -35,8 +35,8 @@ public class ExcludedListReader
     
     public void readExcluded(){
         this.excludedWord = new ArrayList<String>();
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
+        while(excludedScanner.hasNextLine()){
+            String line = excludedScanner.nextLine();
             line.trim();
             excludedWord.add(line);
         }

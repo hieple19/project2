@@ -4,54 +4,58 @@ import java.io.*;
 public class InputFileReader{
     protected ArrayList<String> excludedWord;
     protected TreeSet<Website> siteList;
-    private Scanner scanner;
+    private Scanner siteScanner;
+    private Scanner excludedScanner;
 
     public static void main(String[] args){
-        ExcludedListReader excludeRead = new ExcludedListReader("excludedList.txt");
-        excludeRead.readExcluded();
-        InputFileReader input = new InputFileReader("textFileNames.txt",excludeRead);
-        input.readFile();
-        input.print();
+        InputFileReader input = new InputFileReader("textFileNames.txt","excludedList.txt");
+        input.readExcludedFile();
+        input.readSiteFile();
+
+        //input.printSites();
+        input.printExcluded();
     }
-    
+
     public TreeSet<Website> siteList(){
         return this.siteList;
     }
-    
-    public InputFileReader(String dir, ExcludedListReader list){
+
+    public InputFileReader(String mainText, String excludedText){
         try{
-            FileReader reader = new FileReader(dir);
-            scanner = new Scanner(reader);
-            this.excludedWord = list.excludedList();
+            FileReader siteReader = new FileReader(mainText);
+            FileReader excludedReader = new FileReader(excludedText);
+            siteScanner = new Scanner(siteReader);
+            excludedScanner = new Scanner(excludedReader);
             this.siteList = new TreeSet<Website>();
         }
         catch(Exception e){
+            System.out.println("Error reading file");
             e.printStackTrace(System.out);
         }
     }
 
-    public void readFile(){
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
+    public void readSiteFile(){
+        while(siteScanner.hasNextLine()){
+            String line = siteScanner.nextLine();
             String[] words = line.split(" ");
             String url = words[0];
             String priority = words[1];
             String fileName = words[2];
             Website newSite = new Website(fileName, url, priority);
-
+            newSite.setExcludedList(this.excludedWord);
             try{
-                Scanner siteScanner = new Scanner(new FileReader(fileName));
-                while(siteScanner.hasNextLine()){
-                    String line2 = siteScanner.nextLine().replaceAll("[^a-zA-Z ]", "");
+                Scanner siteDataScanner = new Scanner(new FileReader(fileName));
+                while(siteDataScanner.hasNextLine()){
+                    String line2 = siteDataScanner.nextLine().replaceAll("[^a-zA-Z ]", "");
                     String[] words2 = line2.split(" ");
-                    
+
                     for(String word: words2){
                         if(!this.excludedWord.contains(word.toLowerCase())){
                             newSite.addWord(word);
                         }
                     }
                 }
-                siteScanner.close();
+                siteDataScanner.close();
             }
             catch(FileNotFoundException e){
                 System.out.println("File Not Found");
@@ -63,61 +67,34 @@ public class InputFileReader{
             }
             this.siteList.add(newSite);
         }
-        scanner.close();
+        siteScanner.close();
     }
 
-    public void print(){
+    public void readExcludedFile(){
+        this.excludedWord = new ArrayList<String>();
+        while(excludedScanner.hasNextLine()){
+            String line = excludedScanner.nextLine();
+            line.trim();
+            this.excludedWord.add(line);
+        }
+    }
+
+    public ArrayList<String> excludedList(){ return this.excludedWord;}
+
+    public void printSites(){
         Iterator itr = this.siteList.iterator();
         while(itr.hasNext()){
             Website site = (Website) itr.next();
-            site.print();
+            site.printResult();
             System.out.println();
         }
     }
 
-    /*public void addSiteData(){
-    for(String siteFile: fileNames){
-    try{
-    FileReader reader = new FileReader(siteFile);
-    Scanner siteScanner = new Scanner(reader);
+    public void printExcluded(){
+        for(String s: this.excludedWord){
+            System.out.println(s);
+        }
+        System.out.println(excludedWord.size());
 
-    String nameLine = siteScanner.nextLine();
-    String name = nameLine.substring(5);
-
-    String urlLine = siteScanner.nextLine();
-    String url = urlLine.substring(4);
-
-    String priorityLine = siteScanner.nextLine();
-    String priority = priorityLine.substring(7);
-
-    Website newSite = new Website(name,url,priority);
-
-    while(siteScanner.hasNextLine()){
-    String line = siteScanner.nextLine();
-    String[] words = line.split(" ");
-    /*for(String word: words){
-    word = word.toLowerCase();
-    word = word.replaceAll("[\\W+]", "");
-
-    for(String word: words){
-    if(!this.excludedWord.contains(word.toLowerCase())){
-    newSite.addWord(word);
     }
-    }
-    }
-
-    siteList.add(newSite);
-    }
-    catch(FileNotFoundException e){
-    System.out.println("File Not Found ");
-    e.printStackTrace();
-    }
-    catch(Exception e){
-    e.printStackTrace();
-    }
-    finally{
-    scanner.close();
-    }
-    }
-    }*/        
 }

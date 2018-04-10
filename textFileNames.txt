@@ -1,2 +1,5 @@
 https://abcnews.go.com/Technology/54123618 high spaceX.txt
-https://google.com/Tech high google.txt
+https://google.com/Tech high banana.txt
+apple.com low apple.txt
+facebook.com medium facebook.txt
+comp.sci.com low comp.txt

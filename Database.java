@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class Database
 {
-    protected ArrayList<String> excludedWord;
+    protected ArrayList<String> excludedList;
     protected TreeSet<Website> siteList;
 
     public static void main(String[] args){
@@ -32,6 +32,7 @@ public class Database
     public Database()
     {
         this.siteList = new TreeSet<Website>();
+        this.excludedList = new ArrayList<String>();
     }
 
     public void addSite(Website site){
@@ -42,18 +43,35 @@ public class Database
         for(Website w: i1.siteList()){
             this.siteList.add(w);
         }
+        this.excludedList = i1.excludedList();
     }
 
-    public PriorityQueue<Website> searchWords(PriorityQueue<String> searchWords){
-        PriorityQueue<Website>  sites = new PriorityQueue<Website> ();
+    public PriorityQueue<Website> searchWords(PriorityQueue<String> inputWords){
+        PriorityQueue<Website>  sites = new PriorityQueue<Website> (Collections.reverseOrder());
+        PriorityQueue<String> searchWords = new PriorityQueue<String>();
+        this.clearList();
+        for(String word: inputWords){
+            if(this.excludedList.contains(word)){
+                System.out.println();
+                System.out.println(word + " is in list of excluded words");
+            }
+            else{
+                searchWords.add(word);
+            }
+        }
         for(Website site: siteList){
             if(site.searchWords(searchWords)){
-                sites.add(site);
+                sites.add(site);              
             }
         }
         return sites;
     }
-
+    
+    public void clearList(){
+        for(Website site: this.siteList){
+            site.clearMatchList();
+        }
+    }
     public void print(){
         System.out.println(siteList);
         for(Website w: siteList){
