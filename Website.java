@@ -12,10 +12,10 @@ public class Website implements Comparable<Website>
     private String name;
     private String url;
     private String priority;
-    private ArrayList<String> matchList;
+    private TreeSet<String> matchList;
 
-    private ArrayList<String> wordList;
-    private ArrayList<String> excludedList;
+    private TreeSet<String> wordList;
+    private TreeSet<String> excludedList;
 
     /**
      * Constructor for objects of class Webpage
@@ -25,18 +25,18 @@ public class Website implements Comparable<Website>
         this.name = name;
         this.url = url;
         this.priority = priority;
-        this.wordList = new ArrayList<String>();
-        this.excludedList = new ArrayList<String>();
-        this.matchList = new ArrayList<String>();
+        this.wordList = new TreeSet<String>();
+        this.excludedList = new TreeSet<String>();
+        this.matchList = new TreeSet<String>();
     }
 
     public Website(Website copy){
         this.name = copy.getName();
         this.url = copy.getUrl();
         this.priority = copy.getPriority();
-        this.wordList = new ArrayList<String>();
-        this.excludedList = new ArrayList<String>();
-        this.matchList = new ArrayList<String>();
+        this.wordList = new TreeSet<String>();
+        this.excludedList = new TreeSet<String>();
+        this.matchList = new TreeSet<String>();
 
         for(String word: copy.getWordList()){
             this.wordList.add(word);
@@ -55,13 +55,41 @@ public class Website implements Comparable<Website>
 
     public String getPriority() {return this.priority;}
 
-    public ArrayList<String> getWordList() {return this.wordList;}
+    public TreeSet<String> getWordList() {return this.wordList;}
 
-    public ArrayList<String> getExcludedList() {return this.excludedList;};
+    public TreeSet<String> getExcludedList() {return this.excludedList;}
 
-    public void setExcludedList(ArrayList<String> list) {this.excludedList = list;}
+    public void setExcludedList(TreeSet<String> list) {this.excludedList = list;}
 
-    public ArrayList<String> getMatchList() { return this.matchList;}
+    public TreeSet<String> getMatchList() { return this.matchList;}
+
+    public void clearMatchList(){
+        this.matchList.clear();
+    }
+
+    public String[] wordArray() {
+        Iterator itr = this.wordList.iterator();
+        String[] result = new String[this.wordList.size()];
+        int i = 0;
+        while(itr.hasNext()){
+            String word = (String) itr.next();
+            result[i] = word;
+            i++;
+        }
+        return result;
+    }
+
+    public String[] matchArray(){
+        Iterator itr = this.matchList.iterator();
+        String[] result = new String[this.matchList.size()];
+        int i = 0;
+        while(itr.hasNext()){
+            String word = (String) itr.next();
+            result[i] = word;
+            i++;
+        }
+        return result;
+    }
 
     /**
      * Method add words to site's list of words
@@ -81,7 +109,6 @@ public class Website implements Comparable<Website>
     }
 
     public boolean searchWord(String word){
-
         if(word.startsWith("-")){
             String search = word.substring(1,word.length());
             search = search.replaceAll("[^a-zA-Z ]", "");
@@ -91,12 +118,11 @@ public class Website implements Comparable<Website>
         return this.wordList.contains(word.replaceAll("[^a-zA-Z ]", ""));
     }
 
-    public void clearMatchList(){
-        this.matchList.clear();
-    }
-
     public boolean searchWords(PriorityQueue<String> searchWords){
-        if(searchWords.size() == 1){
+        if(searchWords.size() == 0){
+            return true;
+        }
+        else if(searchWords.size() == 1){
             String top = searchWords.peek().toLowerCase();
 
             if(this.searchWord(top)){
@@ -109,7 +135,7 @@ public class Website implements Comparable<Website>
             while(itr.hasNext()){
                 String top = (String) itr.next();
                 top = top.toLowerCase();
-                
+
                 if(this.searchWord(top)){
                     this.matchList.add(top);
                 }          
@@ -183,27 +209,8 @@ public class Website implements Comparable<Website>
         System.out.println("MatchList " + matchList);
     }
 
-}
-/*public int compareTo(Website site){
-Integer word1 = this.matchList.size();
-Integer word2 = site.getMatchList().size();
-if(word1 != word2){
-return word1.compareTo(word2);
-}
+    public void printWords(){
+        System.out.println(wordList);
+    }
 
-if(this.getPriority().toLowerCase().equals(site.getPriority().toLowerCase())){
-return this.getName().compareTo(site.getName());
 }
-else if(this.priority.toLowerCase().equals("low")){
-return 1;
-}
-else if(this.priority.toLowerCase().equals("medium")){
-if(site.getPriority().toLowerCase().equals("high")){
-return 1;
-}
-else if(site.getPriority().toLowerCase().equals("low")){
-return -1;
-}
-}
-return -1;
-}*/

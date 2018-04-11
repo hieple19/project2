@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class InputFileReader{
-    protected ArrayList<String> excludedWord;
+    protected TreeSet<String> excludedList;
     protected TreeSet<Website> siteList;
     private Scanner siteScanner;
     private Scanner excludedScanner;
@@ -12,8 +12,17 @@ public class InputFileReader{
         input.readExcludedFile();
         input.readSiteFile();
 
-        //input.printSites();
-        input.printExcluded();
+        InputFileReader input2 = new InputFileReader("testFileNames.txt", "excludedList.txt");
+        input2.readExcludedFile();
+        input2.readSiteFile();
+        //input2.printSites();
+        Iterator itr = input2.siteList().iterator();
+        itr.next();
+        Website site3 = (Website)itr.next();
+        
+        site3.printWords();
+
+        //input.printExcluded();
     }
 
     public TreeSet<Website> siteList(){
@@ -42,7 +51,7 @@ public class InputFileReader{
             String priority = words[1];
             String fileName = words[2];
             Website newSite = new Website(fileName, url, priority);
-            newSite.setExcludedList(this.excludedWord);
+            newSite.setExcludedList(this.excludedList);
             try{
                 Scanner siteDataScanner = new Scanner(new FileReader(fileName));
                 while(siteDataScanner.hasNextLine()){
@@ -50,7 +59,7 @@ public class InputFileReader{
                     String[] words2 = line2.split(" ");
 
                     for(String word: words2){
-                        if(!this.excludedWord.contains(word.toLowerCase())){
+                        if(!this.excludedList.contains(word.toLowerCase())){
                             newSite.addWord(word);
                         }
                     }
@@ -71,15 +80,72 @@ public class InputFileReader{
     }
 
     public void readExcludedFile(){
-        this.excludedWord = new ArrayList<String>();
+        this.excludedList = new TreeSet<String>();
         while(excludedScanner.hasNextLine()){
             String line = excludedScanner.nextLine();
             line.trim();
-            this.excludedWord.add(line);
+            this.excludedList.add(line);
         }
     }
 
-    public ArrayList<String> excludedList(){ return this.excludedWord;}
+    public TreeSet<String> excludedList(){ return this.excludedList;}
+
+    public String[] excludedToArray(){
+        String[] result = new String[this.excludedList.size()];
+        for(int i = 0; i<result.length; i++){
+            result[i] = this.excludedList.pollFirst();
+        }
+        return result;         
+    }
+
+    public String[] siteNames(){
+        String[] result = new String[this.siteList.size()];
+        Iterator itr = this.siteList.iterator();
+        int i =0;
+        while(itr.hasNext()){
+            Website site = (Website)itr.next();
+            result[i] = site.getName();
+            i++;
+        }
+        return result;    
+    }
+
+    public String[] sitePriority(){
+        String[] result = new String[this.siteList.size()];
+        Iterator itr = this.siteList.iterator();
+        int i =0;
+        while(itr.hasNext()){
+            Website site = (Website)itr.next();
+            result[i] = site.getPriority();
+            i++;
+        }
+        return result;   
+    }
+
+    public String[] siteUrl(){
+        String[] result = new String[this.siteList.size()];
+        Iterator itr = this.siteList.iterator();
+        int i =0;
+        while(itr.hasNext()){
+            Website site = (Website)itr.next();
+            result[i] = site.getUrl();
+            i++;
+        }
+        return result;   
+    }
+    
+    public Website[] websiteArray(){
+        Website[] list = new Website[this.siteList.size()];
+        Iterator itr = this.siteList.iterator();
+        int i =0;
+        while(itr.hasNext()){
+            Website site = (Website)itr.next();
+            list[i] = site;
+            i++;
+        }
+        return list;
+    }
+
 
     public void printSites(){
         Iterator itr = this.siteList.iterator();
@@ -91,10 +157,11 @@ public class InputFileReader{
     }
 
     public void printExcluded(){
-        for(String s: this.excludedWord){
+        for(String s: this.excludedList){
             System.out.println(s);
         }
-        System.out.println(excludedWord.size());
-
+        System.out.println(excludedList.size());
     }
+    
+    
 }

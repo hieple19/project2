@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class Database
 {
-    protected ArrayList<String> excludedList;
+    protected TreeSet<String> excludedList;
     protected TreeSet<Website> siteList;
 
     public static void main(String[] args){
@@ -32,7 +32,11 @@ public class Database
     public Database()
     {
         this.siteList = new TreeSet<Website>();
-        this.excludedList = new ArrayList<String>();
+        this.excludedList = new TreeSet<String>();
+    }
+
+    public TreeSet<Website> getSiteList(){
+        return this.siteList;
     }
 
     public void addSite(Website site){
@@ -46,19 +50,25 @@ public class Database
         this.excludedList = i1.excludedList();
     }
 
-    public PriorityQueue<Website> searchWords(PriorityQueue<String> inputWords){
-        PriorityQueue<Website>  sites = new PriorityQueue<Website> (Collections.reverseOrder());
+    public PriorityQueue<String> checkForExcluded(PriorityQueue<String> inputWords){
         PriorityQueue<String> searchWords = new PriorityQueue<String>();
-        this.clearList();
         for(String word: inputWords){
             if(this.excludedList.contains(word)){
                 System.out.println();
-                System.out.println(word + " is in list of excluded words");
+                System.out.println("'" + word +"' "+ "is in list of excluded words");
             }
             else{
                 searchWords.add(word);
             }
         }
+        return searchWords;
+    }
+
+    public PriorityQueue<Website> searchWords(PriorityQueue<String> inputWords){
+        PriorityQueue<Website> sites = new PriorityQueue<Website> (Collections.reverseOrder());
+        PriorityQueue<String> searchWords = this.checkForExcluded(inputWords);
+        this.clearList();
+
         for(Website site: siteList){
             if(site.searchWords(searchWords)){
                 sites.add(site);              
@@ -66,12 +76,25 @@ public class Database
         }
         return sites;
     }
-    
+
+    public Website[] websiteArray(){
+        Website[] list = new Website[this.siteList.size()];
+        Iterator itr = this.siteList.iterator();
+        int i =0;
+        while(itr.hasNext()){
+            Website site = (Website)itr.next();
+            list[i] = site;
+            i++;
+        }
+        return list;
+    }
+
     public void clearList(){
         for(Website site: this.siteList){
             site.clearMatchList();
         }
     }
+
     public void print(){
         System.out.println(siteList);
         for(Website w: siteList){

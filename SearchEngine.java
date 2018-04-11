@@ -74,18 +74,20 @@ public class SearchEngine
 
     public void run(){
         while(!search){       
-            this.checkContinue();
+            //this.checkContinue();
             System.out.println("Type in keywords");
+            System.out.println("Please do not end query with connector and/or");
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
             String[] inputs = line.split(" or ");
+            
             this.searchWords = new PriorityQueue<String>();
             this.results = new PriorityQueue<Website>();
-
-            if(inputs[0].equals("y") && inputs.length == 1){
-                this.search = true;
+            
+            if(inputs[0].equals("n")){
+                System.exit(0);
             }
-            else if(inputs.length == 1){
+            if(inputs.length == 1){
                 String[] keyWords = inputs[0].split(" and ");
                 keyWords = trim(keyWords);
                 this.searchOneClause(keyWords);
@@ -168,5 +170,7 @@ public class SearchEngine
         }
         return result;
     }
+    
+    
 
 }
