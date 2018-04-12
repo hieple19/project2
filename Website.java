@@ -79,18 +79,6 @@ public class Website implements Comparable<Website>
         return result;
     }
 
-    public String[] matchArray(){
-        Iterator itr = this.matchList.iterator();
-        String[] result = new String[this.matchList.size()];
-        int i = 0;
-        while(itr.hasNext()){
-            String word = (String) itr.next();
-            result[i] = word;
-            i++;
-        }
-        return result;
-    }
-
     /**
      * Method add words to site's list of words
      */
@@ -118,12 +106,12 @@ public class Website implements Comparable<Website>
         return this.wordList.contains(word.replaceAll("[^a-zA-Z ]", ""));
     }
 
-    public boolean searchWords(PriorityQueue<String> searchWords){
+    public boolean searchWords(TreeSet<String> searchWords){
         if(searchWords.size() == 0){
-            return true;
+            return false;
         }
         else if(searchWords.size() == 1){
-            String top = searchWords.peek().toLowerCase();
+            String top = searchWords.first().toLowerCase();
 
             if(this.searchWord(top)){
                 this.matchList.add(top);

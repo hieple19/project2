@@ -10,7 +10,7 @@ import java.io.*;
 public class SearchEngine
 {
     private Database ds;
-    private PriorityQueue<String> searchWords;
+    private TreeSet<String> searchWords;
     private PriorityQueue<Website> results;
     private boolean search;
     private boolean exit;
@@ -81,7 +81,7 @@ public class SearchEngine
             String line = scanner.nextLine();
             String[] inputs = line.split(" or ");
             
-            this.searchWords = new PriorityQueue<String>();
+            this.searchWords = new TreeSet<String>();
             this.results = new PriorityQueue<Website>();
             
             if(inputs[0].equals("n")){
@@ -110,8 +110,7 @@ public class SearchEngine
     }
 
     public PriorityQueue<Website> mergeResults(PriorityQueue<Website> p1, PriorityQueue<Website> p2){
-        //ResultComparator c = new ResultComparator();
-
+        
         PriorityQueue<Website> result = new PriorityQueue<Website>(Collections.reverseOrder());
         PriorityQueue<Website> toDelete = new PriorityQueue<Website>();
         for(Website queue1: p1){

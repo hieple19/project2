@@ -41,18 +41,18 @@ public class WebsiteTest
         Iterator itr = input2.siteList().iterator();
         Website site2 = (Website)itr.next();
 
-        PriorityQueue<String> search = new PriorityQueue<String>();
+        TreeSet<String> search = new TreeSet<String>();
         search.add("liberal");
         String[] expected = {"liberal"};
         assertEquals("Test 1", true, site2.searchWords(search));
-        assertArrayEquals("Test 1", expected, site2.matchArray());
+        assertArrayEquals("Test 1", expected, site2.getMatchList().toArray());
 
         search.clear();
         search.add("-liberal");
         site2.clearMatchList();
         String[] expected2 = {};
         assertEquals("Test 1", false, site2.searchWords(search));
-        assertArrayEquals("Test 1", expected2, site2.matchArray());
+        assertArrayEquals("Test 1", expected2, site2.getMatchList().toArray());
     }
 
     @Test
@@ -63,17 +63,17 @@ public class WebsiteTest
         Iterator itr = input2.siteList().iterator();
         Website site2 = (Website)itr.next();
 
-        PriorityQueue<String> search = new PriorityQueue<String>();
+        TreeSet<String> search = new TreeSet<String>();
         String[] empty = {};
-        assertEquals("Test empty", true, site2.searchWords(search));
-        assertArrayEquals("Test empty", empty, site2.matchArray());
+        assertEquals("Test empty", false, site2.searchWords(search));
+        assertArrayEquals("Test empty", empty, site2.getMatchList().toArray());
 
         search.add("liberal");
         search.add("lafayette");
         site2.clearMatchList();
         String[] expected = {"lafayette","liberal"};
         assertEquals("Test 1", true, site2.searchWords(search));
-        assertArrayEquals("Test 1", expected, site2.matchArray());
+        assertArrayEquals("Test 1", expected, site2.getMatchList().toArray());
 
         search.clear();
         search.add("-liberal");
@@ -81,7 +81,7 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected2 = {"lafayette"};
         assertEquals("Test 1", false, site2.searchWords(search));
-        assertArrayEquals("Test 1", expected2, site2.matchArray());
+        assertArrayEquals("Test 1", expected2, site2.getMatchList().toArray());
 
         search.clear();
         search.add("environment");
@@ -89,7 +89,7 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected3 = {"environment"};
         assertEquals("Test 3", false, site2.searchWords(search));
-        assertArrayEquals("Test 3", expected3, site2.matchArray());
+        assertArrayEquals("Test 3", expected3, site2.getMatchList().toArray());
 
         search.clear();
         search.add("-rocket");
@@ -97,7 +97,7 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected4 = {"-rocket"};
         assertEquals("Test 4", false, site2.searchWords(search));
-        assertArrayEquals("Test 4", expected4,site2.matchArray());
+        assertArrayEquals("Test 4", expected4,site2.getMatchList().toArray());
 
         search.clear();
         search.add("hiep");
@@ -105,7 +105,7 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected5 = {};
         assertEquals("Test 5", false, site2.searchWords(search));
-        assertArrayEquals("Test 5", expected5,site2.matchArray());
+        assertArrayEquals("Test 5", expected5,site2.getMatchList().toArray());
     }
 
     @Test
@@ -116,14 +116,14 @@ public class WebsiteTest
         Iterator itr = input2.siteList().iterator();
         Website site2 = (Website)itr.next();
 
-        PriorityQueue<String> search = new PriorityQueue<String>();
+        TreeSet<String> search = new TreeSet<String>();
         search.add("liberal");
         search.add("lafayette");
         search.add("environment");
         site2.clearMatchList();
         String[] expected = {"environment","lafayette","liberal"};
         assertEquals("Test 1", true, site2.searchWords(search));
-        assertArrayEquals("Test 1", expected, site2.matchArray());
+        assertArrayEquals("Test 1", expected, site2.getMatchList().toArray());
 
         search.clear();
         search.add("-liberal");
@@ -132,7 +132,7 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected2 = {"environment","lafayette"};
         assertEquals("Test 2", true, site2.searchWords(search));
-        assertArrayEquals("Test 2", expected2, site2.matchArray());
+        assertArrayEquals("Test 2", expected2, site2.getMatchList().toArray());
 
         search.clear();
         search.add("environment");
@@ -141,7 +141,7 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected3 = {"environment"};
         assertEquals("Test 3", false, site2.searchWords(search));
-        assertArrayEquals("Test 3", expected3, site2.matchArray());
+        assertArrayEquals("Test 3", expected3, site2.getMatchList().toArray());
 
         search.clear();
         search.add("-rocket");
@@ -150,7 +150,7 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected4 = {"-rocket","liberal"};
         assertEquals("Test 4", true, site2.searchWords(search));
-        assertArrayEquals("Test 4", expected4,site2.matchArray());
+        assertArrayEquals("Test 4", expected4,site2.getMatchList().toArray());
 
         search.clear();
         search.add("-liberal");
@@ -159,6 +159,6 @@ public class WebsiteTest
         site2.clearMatchList();
         String[] expected5 = {};
         assertEquals("Test 5", false, site2.searchWords(search));
-        assertArrayEquals("Test 5", expected5,site2.matchArray());
+        assertArrayEquals("Test 5", expected5,site2.getMatchList().toArray());
     }
 }

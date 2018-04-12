@@ -12,18 +12,20 @@ public class Database
     protected TreeSet<Website> siteList;
 
     public static void main(String[] args){
-        Database ds = new Database();
-        Website w1 = new Website("CNN", "cnn.com", "High");
-        Website w2 = new Website("CNN", "cnn.s2", "Low");
-        Website w3 = new Website("CNN", "cnn.lol", "Medium");
-        Website w4 = new Website("BC", "cnn.s2", "Low");
-        ds.addSite(w2);
-        //ds.addSite(w3);
-        //ds.addSite(w1);
-        ds.addSite(w2);
-        ds.addSite(w4);
 
-        ds.print();
+        InputFileReader input = new InputFileReader("testFileNames.txt", "excludedList.txt");
+        input.readExcludedFile();
+        input.readSiteFile();
+        Database ds = new Database();
+        ds.readData(input);
+
+        Iterator itr = ds.getSiteList().iterator();
+        Website site2 = (Website)itr.next();
+        Website site3 = (Website)itr.next();
+        Website site1 = (Website)itr.next();
+        TreeSet<String> words = new TreeSet<String>();
+        PriorityQueue<Website> results = new PriorityQueue<Website>();
+        System.out.println(ds.searchWords(words));
     }
 
     /**
@@ -50,8 +52,8 @@ public class Database
         this.excludedList = i1.excludedList();
     }
 
-    public PriorityQueue<String> checkForExcluded(PriorityQueue<String> inputWords){
-        PriorityQueue<String> searchWords = new PriorityQueue<String>();
+    public TreeSet<String> checkForExcluded(TreeSet<String> inputWords){
+        TreeSet<String> searchWords = new TreeSet<String>();
         for(String word: inputWords){
             if(this.excludedList.contains(word)){
                 System.out.println();
@@ -64,9 +66,9 @@ public class Database
         return searchWords;
     }
 
-    public PriorityQueue<Website> searchWords(PriorityQueue<String> inputWords){
+    public PriorityQueue<Website> searchWords(TreeSet<String> inputWords){
         PriorityQueue<Website> sites = new PriorityQueue<Website> (Collections.reverseOrder());
-        PriorityQueue<String> searchWords = this.checkForExcluded(inputWords);
+        TreeSet<String> searchWords = this.checkForExcluded(inputWords);
         this.clearList();
 
         for(Website site: siteList){
@@ -75,18 +77,6 @@ public class Database
             }
         }
         return sites;
-    }
-
-    public Website[] websiteArray(){
-        Website[] list = new Website[this.siteList.size()];
-        Iterator itr = this.siteList.iterator();
-        int i =0;
-        while(itr.hasNext()){
-            Website site = (Website)itr.next();
-            list[i] = site;
-            i++;
-        }
-        return list;
     }
 
     public void clearList(){
