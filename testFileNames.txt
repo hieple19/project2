@@ -1,0 +1,3 @@
+test1.com high testSite1.txt
+test2.com low testSite2.txt
+test3.com medium testSite3.txt
