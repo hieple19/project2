@@ -60,6 +60,8 @@ public class Website implements Comparable<Website>
     public TreeSet<String> getExcludedList() {return this.excludedList;}
 
     public void setExcludedList(TreeSet<String> list) {this.excludedList = list;}
+    
+    public void setMatchList(TreeSet<String> list) {this.matchList = list;}
 
     public TreeSet<String> getMatchList() { return this.matchList;}
 

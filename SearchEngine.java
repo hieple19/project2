@@ -16,7 +16,8 @@ public class SearchEngine
     private boolean exit;
 
     public static void main(String[] args){
-        InputFileReader input = new InputFileReader("textFileNames.txt","excludedList.txt");
+        InputFileReader input = new InputFileReader("testFileNames.txt", "excludedList.txt");
+        //InputFileReader input = new InputFileReader("textFileNames.txt","excludedList.txt");
         input.readExcludedFile();
         input.readSiteFile();
 
@@ -31,7 +32,13 @@ public class SearchEngine
     public SearchEngine(Database ds){
         this.ds = ds;
         this.search = false;
+        this.searchWords = new TreeSet<String>();
+        this.results = new PriorityQueue<Website>();
     }
+
+    public PriorityQueue<Website> getResults(){ return this.results;}
+
+    public void clearSearchList() {this.searchWords.clear();}
 
     public void checkContinue(){
         System.out.println("Press Y to start search");
@@ -44,20 +51,24 @@ public class SearchEngine
     }
 
     public void searchOneClause(String[] keyWords){
+        this.searchWords.clear();
         for(String keyWord: keyWords){
             this.searchWords.add(keyWord);
         }
+
         this.results = ds.searchWords(this.searchWords);
+        System.out.println(results);
     }
 
     public void searchWithOr(String[] firstClause, String[] secondClause){
+        this.searchWords.clear();
         for(String keyWord: firstClause){
             this.searchWords.add(keyWord);
         }
         PriorityQueue<Website> resultFirst = this.copyQueue(ds.searchWords(this.searchWords));
-        this.searchWords.clear();
-        System.out.println("First result" + resultFirst);
 
+        System.out.println("First result" + resultFirst);
+        this.searchWords.clear();
         for(String keyWord: secondClause){
             this.searchWords.add(keyWord);
         }            
@@ -80,10 +91,8 @@ public class SearchEngine
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
             String[] inputs = line.split(" or ");
-            
-            this.searchWords = new TreeSet<String>();
             this.results = new PriorityQueue<Website>();
-            
+
             if(inputs[0].equals("n")){
                 System.exit(0);
             }
@@ -110,7 +119,7 @@ public class SearchEngine
     }
 
     public PriorityQueue<Website> mergeResults(PriorityQueue<Website> p1, PriorityQueue<Website> p2){
-        
+
         PriorityQueue<Website> result = new PriorityQueue<Website>(Collections.reverseOrder());
         PriorityQueue<Website> toDelete = new PriorityQueue<Website>();
         for(Website queue1: p1){
@@ -169,7 +178,15 @@ public class SearchEngine
         }
         return result;
     }
-    
-    
 
+    public String[] nameSite(){
+        String [] result = new String[this.results.size()];
+        //Iterator itr = this.results.iterator();
+        for(int i = 0; i<result.length; i++){
+            //Website web = (Website) itr.next();
+            Website web = this.results.poll();
+            result[i] = web.getName();
+        }
+        return result;
+    }
 }

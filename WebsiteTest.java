@@ -12,7 +12,55 @@ import java.util.*;
  * @version (a version number or a date)
  */
 public class WebsiteTest
-{
+{   
+    @Test
+    public void compareTest(){
+        Website s1 = new Website("F", "G", "low");
+        Website s2 = new Website("A", "C", "medium");
+        Website s3 = new Website("D", "E", "high");
+
+        assertEquals("Medium > Low", -1, s1.compareTo(s2));
+        assertEquals("Medium > Low", 1, s2.compareTo(s1));
+        assertEquals("High > Low", -1, s1.compareTo(s3));
+        assertEquals("High > Low", 1, s3.compareTo(s1));
+        assertEquals("High > Medium", -1, s2.compareTo(s3));
+        assertEquals("High > Medium", 1, s3.compareTo(s2));
+
+        TreeSet<String> temp1 = new TreeSet<String>();
+        temp1.add("Hiep");
+        s1.setMatchList(temp1);
+
+        assertEquals("Test 1", 1, s1.compareTo(s2));
+        assertEquals("Test 2", 1, s1.compareTo(s3));
+
+        Website s4 = new Website("F", "E", "high");
+        assertEquals("Test name", -2, s4.compareTo(s3));
+    }
+
+    @Test
+    public void combineMatchList(){
+        Website s1 = new Website("F", "G", "low");
+        Website s2 = new Website("F", "G", "low");
+
+        String[] empty = {};
+        assertEquals("Combine List", true, s1.combineMatchList(s2));
+        assertArrayEquals("Combine list", empty, s1.getMatchList().toArray());
+        
+        TreeSet<String> temp1 = new TreeSet<String>();
+        temp1.add("Hiep");
+        s1.setMatchList(temp1);
+        String[] expected = {"Hiep"};
+        assertEquals("Combine List", true, s1.combineMatchList(s2));
+        assertArrayEquals("Combine list", expected, s1.getMatchList().toArray());
+
+        TreeSet<String> temp2 = new TreeSet<String>();
+        temp1.add("Le");
+        s2.setMatchList(temp2);
+        String[] expected2 = {"Hiep", "Le"};
+        assertEquals("Combine List", true, s1.combineMatchList(s2));
+        assertArrayEquals("Combine List", expected2, s1.getMatchList().toArray());
+    }
+
     @Test
     public void searchWord(){
         Website emptySite = new Website("a","b","c");

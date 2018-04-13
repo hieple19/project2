@@ -70,7 +70,6 @@ public class Database
         PriorityQueue<Website> sites = new PriorityQueue<Website> (Collections.reverseOrder());
         TreeSet<String> searchWords = this.checkForExcluded(inputWords);
         this.clearList();
-
         for(Website site: siteList){
             if(site.searchWords(searchWords)){
                 sites.add(site);              

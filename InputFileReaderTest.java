@@ -45,7 +45,7 @@ public class InputFileReaderTest
 
         Iterator itr = input.siteList().iterator();
         Website site2 = (Website)itr.next();
-        //site2.printResult();
+
         Website site3 = (Website)itr.next();
         Website site1 = (Website)itr.next();
         String[] expected1 = {"computer","human","interaction","science","study"};
