@@ -1,7 +1,20 @@
 import java.util.*;
 import java.io.*;
 
+/**
+ * Class reads input files for website data and list of excluded words
+ *
+ * @ Hiep Le
+ * @ 04/13/18
+ */
+
 public class InputFileReader{
+
+    /**
+     * Class has variables to store list of excluded words
+     * and list of sites read. It also uses scanners to look
+     * through the files.
+     */
     protected TreeSet<String> excludedList;
     protected TreeSet<Website> siteList;
     private Scanner siteScanner;
@@ -19,16 +32,16 @@ public class InputFileReader{
         Iterator itr = input2.siteList().iterator();
         itr.next();
         Website site3 = (Website)itr.next();
-        
+
         site3.printWords();
 
         //input.printExcluded();
     }
 
-    public TreeSet<Website> siteList(){
-        return this.siteList;
-    }
-
+    /**
+     * Constructor for Input File Reader.
+     * @param Input File Directories
+     */
     public InputFileReader(String mainText, String excludedText){
         try{
             FileReader siteReader = new FileReader(mainText);
@@ -43,24 +56,46 @@ public class InputFileReader{
         }
     }
 
+    public TreeSet<Website> siteList(){ return this.siteList; }
+
+    public TreeSet<String> excludedList(){ return this.excludedList;}
+
+    /**
+     * Method reads the file for list of excluded words
+     */
+    public void readExcludedFile(){
+        this.excludedList = new TreeSet<String>();
+        while(excludedScanner.hasNextLine()){
+            String line = excludedScanner.nextLine();
+            line.trim();
+            this.excludedList.add(line);         // Read, format and add word to set
+        }
+    }
+
+    /**
+     * Method reads the file for site information and words
+     */
     public void readSiteFile(){
         while(siteScanner.hasNextLine()){
             String line = siteScanner.nextLine();
-            String[] words = line.split(" ");
+            String[] words = line.split(" ");       // Read the site's name, url and word fle directory
             String url = words[0];
             String priority = words[1];
             String fileName = words[2];
             Website newSite = new Website(fileName, url, priority);
-            newSite.setExcludedList(this.excludedList);
+
+            newSite.setExcludedList(this.excludedList); // Update new site's excluded list
+
             try{
+                // Create a scanner to scan site data
                 Scanner siteDataScanner = new Scanner(new FileReader(fileName));
                 while(siteDataScanner.hasNextLine()){
-                    String line2 = siteDataScanner.nextLine().replaceAll("[^a-zA-Z ]", "");
-                    String[] words2 = line2.split(" ");
+                    String line2 = siteDataScanner.nextLine().replaceAll("[^a-zA-Z ]", ""); // Remove punctuation from the words
+                    String[] words2 = line2.split(" ");     // Split every line into single words
 
                     for(String word: words2){
                         if(!this.excludedList.contains(word.toLowerCase())){
-                            newSite.addWord(word);
+                            newSite.addWord(word);      // Add word if it's not in excluded list
                         }
                     }
                 }
@@ -79,17 +114,11 @@ public class InputFileReader{
         siteScanner.close();
     }
 
-    public void readExcludedFile(){
-        this.excludedList = new TreeSet<String>();
-        while(excludedScanner.hasNextLine()){
-            String line = excludedScanner.nextLine();
-            line.trim();
-            this.excludedList.add(line);
-        }
-    }
-
-    public TreeSet<String> excludedList(){ return this.excludedList;}
-
+    /**
+     * Method return string array of excluded words.
+     * Used for testing purposes.
+     * @return string array of excluded words
+     */
     public String[] excludedToArray(){
         String[] result = new String[this.excludedList.size()];
         for(int i = 0; i<result.length; i++){
@@ -98,6 +127,11 @@ public class InputFileReader{
         return result;         
     }
 
+    /**
+     * Method return string array of names of all sites in site list
+     * Used for testing purposes.
+     * @return string array of names
+     */
     public String[] siteNames(){
         String[] result = new String[this.siteList.size()];
         Iterator itr = this.siteList.iterator();
@@ -110,6 +144,11 @@ public class InputFileReader{
         return result;    
     }
 
+    /**
+     * Method return string array of priorities of all sites in site list
+     * Used for testing purposes.
+     * @return string array of priorities
+     */
     public String[] sitePriority(){
         String[] result = new String[this.siteList.size()];
         Iterator itr = this.siteList.iterator();
@@ -122,6 +161,11 @@ public class InputFileReader{
         return result;   
     }
 
+    /**
+     * Method return string array of URLS of all sites in site list
+     * Used for testing purposes.
+     * @return string array of urls
+     */
     public String[] siteUrl(){
         String[] result = new String[this.siteList.size()];
         Iterator itr = this.siteList.iterator();
@@ -133,7 +177,11 @@ public class InputFileReader{
         }
         return result;   
     }
-    
+
+    /**
+     * Method return array of websites from the list of sites
+     * @return array of websites
+     */
     public Website[] websiteArray(){
         Website[] list = new Website[this.siteList.size()];
         Iterator itr = this.siteList.iterator();
@@ -145,7 +193,6 @@ public class InputFileReader{
         }
         return list;
     }
-
 
     public void printSites(){
         Iterator itr = this.siteList.iterator();
@@ -162,6 +209,5 @@ public class InputFileReader{
         }
         System.out.println(excludedList.size());
     }
-    
-    
+
 }

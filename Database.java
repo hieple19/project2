@@ -7,7 +7,11 @@ import java.util.*;
  * @author Hiep Le
  */
 public class Database
-{
+{   
+    /**
+     * Class has instance variables that keeps tracks of excluded words
+     * and list of sites in the database
+     */
     protected TreeSet<String> excludedList;
     protected TreeSet<Website> siteList;
 
@@ -41,46 +45,75 @@ public class Database
         return this.siteList;
     }
 
+    /**
+     * Method adds a website to database's set of sites
+     */
     public void addSite(Website site){
         this.siteList.add(site);
     }
 
-    public void readData(InputFileReader i1){
-        for(Website w: i1.siteList()){
-            this.siteList.add(w);
+    /**
+     * Method calls database to read input data from input reader
+     * @param input reader 
+     */
+    public void readData(InputFileReader input){
+        for(Website w: input.siteList()){
+            this.siteList.add(w);           // Add all websites that the input reader finds 
         }
-        this.excludedList = i1.excludedList();
+        this.excludedList = input.excludedList();   // Set excluded words to that read by input reader
     }
 
+    /**
+     * Method checks user input for any excluded word in there
+     * @param input words
+     * @return Set of words to search
+     */
     public TreeSet<String> checkForExcluded(TreeSet<String> inputWords){
-        TreeSet<String> searchWords = new TreeSet<String>();
+        TreeSet<String> searchWords = new TreeSet<String>(); // Set of words after checking
         for(String word: inputWords){
+            // If a word that is excluded,
+            // Display a message. 
             if(this.excludedList.contains(word)){
                 System.out.println();
                 System.out.println("'" + word +"' "+ "is in list of excluded words");
             }
+            // If word is not in excluded list, add to final set
             else{
                 searchWords.add(word);
             }
         }
-        return searchWords;
+        return searchWords;     // return set
     }
 
+    /**
+     * Method searches through all sites in the database for matches
+     * @param input words from users
+     * @return queue of matching sites
+     */
     public PriorityQueue<Website> searchWords(TreeSet<String> inputWords){
+        // Result queue, order is reversed to show high priority site first
         PriorityQueue<Website> sites = new PriorityQueue<Website> (Collections.reverseOrder());
+
+        // Set of search words after checking for excluded words
         TreeSet<String> searchWords = this.checkForExcluded(inputWords);
-        this.clearList();
+
+        // Clear matchlist of all sites to prepare for new search
+        this.clearList();       
+
         for(Website site: siteList){
             if(site.searchWords(searchWords)){
-                sites.add(site);              
+                sites.add(site);      // add site to result queue if there's match        
             }
         }
         return sites;
     }
 
+    /**
+     *  Method clears match list of all sites in database
+     */
     public void clearList(){
         for(Website site: this.siteList){
-            site.clearMatchList();
+            site.getMatchList().clear();
         }
     }
 
