@@ -5,7 +5,7 @@ import java.io.*;
  * Class reads input files for website data and list of excluded words
  *
  * @ Hiep Le
- * @ 04/13/18
+ * @ 04/15/18
  */
 
 public class InputFileReader{
@@ -19,24 +19,6 @@ public class InputFileReader{
     protected TreeSet<Website> siteList;
     private Scanner siteScanner;
     private Scanner excludedScanner;
-
-    public static void main(String[] args){
-        InputFileReader input = new InputFileReader("textFileNames.txt","excludedList.txt");
-        input.readExcludedFile();
-        input.readSiteFile();
-
-        InputFileReader input2 = new InputFileReader("testFileNames.txt", "excludedList.txt");
-        input2.readExcludedFile();
-        input2.readSiteFile();
-        //input2.printSites();
-        Iterator itr = input2.siteList().iterator();
-        itr.next();
-        Website site3 = (Website)itr.next();
-
-        site3.printWords();
-
-        //input.printExcluded();
-    }
 
     /**
      * Constructor for Input File Reader.
@@ -115,7 +97,7 @@ public class InputFileReader{
     }
 
     /**
-     * Method return string array of excluded words.
+     * Method returns string array of excluded words.
      * Used for testing purposes.
      * @return string array of excluded words
      */
@@ -128,7 +110,7 @@ public class InputFileReader{
     }
 
     /**
-     * Method return string array of names of all sites in site list
+     * Method returns string array of names of all sites in site list
      * Used for testing purposes.
      * @return string array of names
      */
@@ -145,7 +127,7 @@ public class InputFileReader{
     }
 
     /**
-     * Method return string array of priorities of all sites in site list
+     * Method returns string array of priorities of all sites in site list
      * Used for testing purposes.
      * @return string array of priorities
      */
@@ -162,7 +144,7 @@ public class InputFileReader{
     }
 
     /**
-     * Method return string array of URLS of all sites in site list
+     * Method returns string array of URLS of all sites in site list
      * Used for testing purposes.
      * @return string array of urls
      */
@@ -179,7 +161,7 @@ public class InputFileReader{
     }
 
     /**
-     * Method return array of websites from the list of sites
+     * Method returns array of websites from the list of sites
      * @return array of websites
      */
     public Website[] websiteArray(){
@@ -193,21 +175,4 @@ public class InputFileReader{
         }
         return list;
     }
-
-    public void printSites(){
-        Iterator itr = this.siteList.iterator();
-        while(itr.hasNext()){
-            Website site = (Website) itr.next();
-            site.printResult();
-            System.out.println();
-        }
-    }
-
-    public void printExcluded(){
-        for(String s: this.excludedList){
-            System.out.println(s);
-        }
-        System.out.println(excludedList.size());
-    }
-
 }

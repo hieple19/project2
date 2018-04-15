@@ -80,39 +80,6 @@ public class Website implements Comparable<Website>
 
     public TreeSet<String> getMatchList() { return this.matchList;}
 
-    /*public void clearMatchList(){
-    this.matchList.clear();
-    }*/
-
-    /**
-     * Method returns an array of words in the website
-     * Used for testing purposes
-     */
-    public String[] wordArray() {
-        Iterator itr = this.wordList.iterator();
-        String[] result = new String[this.wordList.size()];
-        int i = 0;
-        while(itr.hasNext()){
-            String word = (String) itr.next();
-            result[i] = word;
-            i++;
-        }
-        return result;
-    }
-
-    /**
-     * Method add words to site's list of words
-     * @param Array List of Strings to add
-     */
-    public void addWords(ArrayList<String> toAdd){   
-        for(String word: toAdd){  
-            // If website word list does not contain word, add word
-            if(!this.wordList.contains(word.toLowerCase())){
-                this.wordList.add(word.toLowerCase());
-            }
-        }
-    }
-
     /**
      * Method add a word to site's list of words if it does not
      * already contain the word
@@ -144,7 +111,7 @@ public class Website implements Comparable<Website>
     }
     
     /**
-     * Method searchs website for matches,
+     * Method searches website for matches,
      * takes in set of search words of different sizes
      * and handle them accordingly
      * @param Set of search words
@@ -163,24 +130,8 @@ public class Website implements Comparable<Website>
                 return true;
             }
         }
-        /*
-       // For set of two words, return true if website contains both
-        else if(searchWords.size() == 2){
-            Iterator itr = searchWords.iterator();
-            while(itr.hasNext()){                   // Iterate through  set
-                String top = (String) itr.next();
-                top = top.toLowerCase();
-
-                if(this.searchWord(top)){
-                    this.matchList.add(top);    // Add matching words to list
-                }          
-            }
-            if(this.matchList.size() == 2){     // If list contains both words, return true
-                return true;
-            }
-        }*/
         
-        // For set  equal or greater than two words, return true if website contains at least two
+        // For set equal or greater than two words, return true if website contains at least two
         else{
             Iterator itr = searchWords.iterator(); // Iterate through set
             while(itr.hasNext()){
@@ -262,15 +213,26 @@ public class Website implements Comparable<Website>
      * Method prints information about the website
      */
     public void printResult(){
-        System.out.println("Name " + this.name);
-        System.out.println("Url " + this.url);
-        System.out.println("Priority " + this.priority);
-        System.out.println("No words" + this.matchList.size());
+        System.out.println("Name " + this.name + this.url);
+        System.out.println("Reliability " + this.priority);
         System.out.println("MatchList " + matchList);
     }
 
-    public void printWords(){
-        System.out.println(wordList);
+    
+    /**
+     * Method returns an array of words in the website
+     * Used for testing purposes
+     * @return Array of website's words
+     */
+    public String[] wordArray() {
+        Iterator itr = this.wordList.iterator();
+        String[] result = new String[this.wordList.size()];
+        int i = 0;
+        while(itr.hasNext()){
+            String word = (String) itr.next();
+            result[i] = word;
+            i++;
+        }
+        return result;
     }
-
 }

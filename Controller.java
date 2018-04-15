@@ -1,23 +1,22 @@
 
 /**
- * Write a description of class Contoller here.
+ * Controller class takes in directories of input files and 
+ * runs the program
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Hiep Le
+ * @date  04/15/18
  */
 public class Controller
 {
     public static void main(String[] args){
-        InputFileReader input = new InputFileReader("textFileNames.txt","excludedList.txt");
+        InputFileReader input = new InputFileReader(args[0],args[1]);
         input.readExcludedFile();
         input.readSiteFile();
 
         Database ds = new Database();
         ds.readData(input);
-        ds.print();
 
         SearchEngine s1 = new SearchEngine(ds);
-       // s1.input();
-        
+        s1.run();
     }
 }

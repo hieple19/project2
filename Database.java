@@ -5,6 +5,7 @@ import java.util.*;
  * as well as list of words to exclude
  *
  * @author Hiep Le
+ * @date 04/14/18
  */
 public class Database
 {   
@@ -14,23 +15,6 @@ public class Database
      */
     protected TreeSet<String> excludedList;
     protected TreeSet<Website> siteList;
-
-    public static void main(String[] args){
-
-        InputFileReader input = new InputFileReader("testFileNames.txt", "excludedList.txt");
-        input.readExcludedFile();
-        input.readSiteFile();
-        Database ds = new Database();
-        ds.readData(input);
-
-        Iterator itr = ds.getSiteList().iterator();
-        Website site2 = (Website)itr.next();
-        Website site3 = (Website)itr.next();
-        Website site1 = (Website)itr.next();
-        TreeSet<String> words = new TreeSet<String>();
-        PriorityQueue<Website> results = new PriorityQueue<Website>();
-        System.out.println(ds.searchWords(words));
-    }
 
     /**
      * Constructor for objects of class Database
@@ -71,7 +55,7 @@ public class Database
     public TreeSet<String> checkForExcluded(TreeSet<String> inputWords){
         TreeSet<String> searchWords = new TreeSet<String>(); // Set of words after checking
         for(String word: inputWords){
-            // If a word that is excluded,
+            // If a word is excluded,
             // Display a message. 
             if(this.excludedList.contains(word)){
                 System.out.println();
@@ -116,12 +100,4 @@ public class Database
             site.getMatchList().clear();
         }
     }
-
-    public void print(){
-        System.out.println(siteList);
-        for(Website w: siteList){
-            w.printResult();
-        }
-    }
-
 }
