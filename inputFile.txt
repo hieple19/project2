@@ -1,0 +1,5 @@
+www.apple.com high apple.txt
+www.computer.org medium comp.txt
+www.lafayette.edu medium lafayette.txt
+www.facebook.com low facebook.txt
+www.spacex.com high spaceX.txt

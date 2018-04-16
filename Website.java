@@ -213,9 +213,9 @@ public class Website implements Comparable<Website>
      * Method prints information about the website
      */
     public void printResult(){
-        System.out.println("Name " + this.name + this.url);
+        System.out.println("Name " + this.name + " " + this.url);
         System.out.println("Reliability " + this.priority);
-        System.out.println("MatchList " + matchList);
+        System.out.println("Matching words " + matchList);
     }
 
     

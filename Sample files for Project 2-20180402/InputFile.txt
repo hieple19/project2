@@ -1,4 +1,0 @@
-www.elephants.com medium AllAboutElephants.txt
-www.riding.com low TherapeuticEquestrianSport.txt
-www.SouthernEats.com High SouthernCuisine.txt
-www.tornado.com high SurvivingTornadoes.txt

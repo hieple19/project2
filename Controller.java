@@ -9,14 +9,14 @@
 public class Controller
 {
     public static void main(String[] args){
-        InputFileReader input = new InputFileReader(args[0],args[1]);
+        InputFileReader input = new InputFileReader(args[0],args[1]);   // Read input files
         input.readExcludedFile();
         input.readSiteFile();
 
-        Database ds = new Database();
-        ds.readData(input);
+        Database database = new Database();                       
+        database.readData(input);
 
-        SearchEngine s1 = new SearchEngine(ds);
-        s1.run();
+        SearchEngine engine = new SearchEngine(database);
+        engine.run();
     }
 }

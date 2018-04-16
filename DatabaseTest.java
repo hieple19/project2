@@ -83,9 +83,11 @@ public class DatabaseTest
         ds.readData(input);
 
         Iterator itr = ds.getSiteList().iterator();
+        
         Website site2 = (Website)itr.next();
         Website site3 = (Website)itr.next();
         Website site1 = (Website)itr.next();
+        
         TreeSet<String> words = new TreeSet<String>();
         PriorityQueue<Website> expected = new PriorityQueue<Website>();
 

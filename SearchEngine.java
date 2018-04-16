@@ -37,8 +37,8 @@ public class SearchEngine
      * If user presses any other key than y, program exits
      */
     public void checkContinue(){
-        System.out.println("Press Y to start search");
-        System.out.println("Press any other to exit");
+        System.out.println("Enter Y to start search");
+        System.out.println("Enter any other to exit");
         Scanner scanner = new Scanner(System.in);
         String line = scanner.nextLine();
         if(!line.toLowerCase().equals("y")){
@@ -86,6 +86,7 @@ public class SearchEngine
         PriorityQueue<Website> resultSecond = this.copyQueue(database.searchWords(this.searchWords));
 
         // Merge shorter list to longer list 
+        // Duplicate websites in two sites will have its list of matching words combined
         if(resultFirst.size() >= resultSecond.size()){
             this.results = this.mergeResults(resultFirst,resultSecond);
         }
@@ -101,11 +102,10 @@ public class SearchEngine
      */
     public void run(){
         while(true){       
-            //this.checkContinue();                     // Check if user wants to continue
+            this.checkContinue();                     // Check if user wants to continue
 
-            System.out.println("Type in keyWords");     // Display instructions
+            System.out.println("Enter key words");     // Display instructions
             System.out.println("Please do not end query with connector and/or");
-            System.out.println("Type n to exit program");
 
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();           // Read user input
@@ -116,16 +116,15 @@ public class SearchEngine
             // Initialize new results priority queue
             this.results = new PriorityQueue<Website>();
 
-            if(inputs[0].equals("n")){
-                System.exit(0);             // User can do a quick exit from a search by typing n
-            }
             // If input string array only has one string - no OR
             if(inputs.length == 1){
                 String[] keyWords = inputs[0].split(" and ");   // Split the clause into various keyWords separated by AND
                 keyWords = trim(keyWords);                      // Format keyWords and search
+
                 long startTime = System.nanoTime();
                 this.searchOneClause(keyWords);
                 long endTime = System.nanoTime();
+
                 System.out.println();
                 this.printResult();                             // Print result of search
                 System.out.println("Time for search: " + (endTime - startTime));
@@ -205,6 +204,7 @@ public class SearchEngine
      */
     public void printResult(){
         System.out.println("Top results ");
+        System.out.println();
         PriorityQueue<Website> temp = this.copyQueue(this.results);
         if(temp.size() == 0){
             System.out.println("No results found");

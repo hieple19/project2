@@ -23,11 +23,12 @@ public class SearchEngineTest
         input.readSiteFile();
         Database ds = new Database();
         ds.readData(input);
-        ds.print();
         Iterator itr = input.siteList().iterator();
-        Website site2 = (Website)itr.next();
+        
+        Website site2 = (Website)itr.next();            // 3 sites for testing
         Website site3 = (Website)itr.next();
         Website site1 = (Website)itr.next();
+        
         PriorityQueue<Website> expected = new PriorityQueue<Website>(Collections.reverseOrder());
         SearchEngine s1 = new SearchEngine(ds);
 
@@ -36,7 +37,7 @@ public class SearchEngineTest
         assertArrayEquals("Empty case", expected.toArray(),s1.getResults().toArray());
 
         String[] test1 = {"lafayette"};
-        s1.searchOneClause(test1); //site2 has the phrase
+        s1.searchOneClause(test1);      //site2 has the lafayette
 
         expected.add(site2);
         assertArrayEquals("1", expected.toArray(),s1.getResults().toArray());
@@ -74,7 +75,6 @@ public class SearchEngineTest
         input.readSiteFile();
         Database ds = new Database();
         ds.readData(input);
-        ds.print();
         Iterator itr = input.siteList().iterator();
         Website site2 = (Website)itr.next();
         Website site3 = (Website)itr.next();
